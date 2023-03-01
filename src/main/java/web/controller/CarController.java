@@ -13,13 +13,16 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/cars")
 public class CarController {
-    @Autowired
     private CarService carService;
 
-    @GetMapping()
-    public String printCars(@RequestParam(name = "count", defaultValue = "0") int count, ModelMap model) {
-        List<Car> cars;
-        cars = carService.getCountOfCarsList(count);
+    @Autowired
+    public void setCarService(CarService carService) {
+        this.carService = carService;
+    }
+
+    @GetMapping
+    public String printCars(@RequestParam(name = "count", defaultValue = "5") int count, ModelMap model) {
+        List<Car> cars = carService.getCountOfCarsList(count);
         model.addAttribute("car", cars);
         return "cars";
     }
